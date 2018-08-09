@@ -1,4 +1,4 @@
-output "sns_topic_arn" {
-  description = "The ARN of the SNS topic"
-  value       = "${aws_sns_topic.default.arn}"
+output "claims" {
+  description = "The SNS topic claims required, see terraform-aws-shared-sns-topic"
+  value       = ["rds", "events"]
 }

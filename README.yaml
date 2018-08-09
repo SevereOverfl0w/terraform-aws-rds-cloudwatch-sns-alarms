@@ -63,9 +63,15 @@ examples: |-
     skip_final_snapshot  = "true"
   }
 
+  module "claims_sns" {
+    source         = "github::https://github.com/SevereOverfl0w/terraform-aws-shared-sns?ref=master"
+    claims = "${concat(module.rds_alarms.claims)}"
+  }
+
   module "rds_alarms" {
-    source         = "github::https://github.com/cloudposse/terraform-aws-rds-alerts.git?ref=master"
+    source         = "github::https://github.com/SevereOverfl0w/terraform-aws-rds-alerts.git?ref=master"
     db_instance_id = "${aws_db_instance.default.id}"
+    sns_topic_arn = "${module.claims_sns.sns_topic_arn}"
   }
   ```
 
