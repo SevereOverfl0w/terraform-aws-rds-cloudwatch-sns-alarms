@@ -55,3 +55,24 @@ variable "swap_usage_threshold" {
 
   # 256 Megabyte in Byte
 }
+
+variable "name" {
+  type        = "string"
+  description = "Name (unique identifier for app or service)"
+}
+
+variable "namespace" {
+  type        = "string"
+  description = "Namespace (e.g. `cp` or `cloudposse`)"
+}
+
+variable "stage" {
+  type        = "string"
+  description = "Stage (e.g. `prod`, `dev`, `staging`)"
+}
+
+variable "attributes" {
+  type        = "list"
+  description = "List of attributes to add to label."
+  default     = []
+}

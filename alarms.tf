@@ -11,7 +11,7 @@ locals {
 }
 
 resource "aws_cloudwatch_metric_alarm" "burst_balance_too_low" {
-  alarm_name          = "burst_balance_too_low"
+  alarm_name          = "${module.burst_balance_too_low_label.id}"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "BurstBalance"
@@ -29,7 +29,7 @@ resource "aws_cloudwatch_metric_alarm" "burst_balance_too_low" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
-  alarm_name          = "cpu_utilization_too_high"
+  alarm_name          = "${module.cpu_utilization_too_high_label.id}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "CPUUtilization"
@@ -47,7 +47,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_utilization_too_high" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
-  alarm_name          = "cpu_credit_balance_too_low"
+  alarm_name          = "${module.cpu_credit_balance_too_low_label.id}"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "CPUUtilization"
@@ -65,7 +65,7 @@ resource "aws_cloudwatch_metric_alarm" "cpu_credit_balance_too_low" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_too_high" {
-  alarm_name          = "disk_queue_depth_too_high"
+  alarm_name          = "${module.disk_queue_depth_too_high_label.id}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "DiskQueueDepth"
@@ -83,7 +83,7 @@ resource "aws_cloudwatch_metric_alarm" "disk_queue_depth_too_high" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "freeable_memory_too_low" {
-  alarm_name          = "freeable_memory_too_low"
+  alarm_name          = "${module.freeable_memory_too_low_label.id}"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "FreeableMemory"
@@ -101,7 +101,7 @@ resource "aws_cloudwatch_metric_alarm" "freeable_memory_too_low" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
-  alarm_name          = "free_storage_space_threshold"
+  alarm_name          = "${module.free_storage_space_threshold_label.id}"
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "FreeStorageSpace"
@@ -119,7 +119,7 @@ resource "aws_cloudwatch_metric_alarm" "free_storage_space_too_low" {
 }
 
 resource "aws_cloudwatch_metric_alarm" "swap_usage_too_high" {
-  alarm_name          = "swap_usage_too_high"
+  alarm_name          = "${module.swap_usage_too_high_label.id}"
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = "1"
   metric_name         = "SwapUsage"
@@ -134,4 +134,54 @@ resource "aws_cloudwatch_metric_alarm" "swap_usage_too_high" {
   dimensions {
     DBInstanceIdentifier = "${var.db_instance_id}"
   }
+}
+
+module "burst_balance_too_low_label" {
+  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.1.3"
+  name       = "${var.name}"
+   namespace  = "${var.namespace}"
+  stage      = "${var.stage}"
+  attributes = "${compact(concat(var.attributes, list("burst","balance","too","low")))}"
+}
+module "cpu_utilization_too_high_label" {
+  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.1.3"
+  name       = "${var.name}"
+   namespace  = "${var.namespace}"
+  stage      = "${var.stage}"
+  attributes = "${compact(concat(var.attributes, list("cpu","utilization","too","high")))}"
+}
+module "cpu_credit_balance_too_low_label" {
+  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.1.3"
+  name       = "${var.name}"
+   namespace  = "${var.namespace}"
+  stage      = "${var.stage}"
+  attributes = "${compact(concat(var.attributes, list("cpu","credit","balance","too","low")))}"
+}
+module "disk_queue_depth_too_high_label" {
+  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.1.3"
+  name       = "${var.name}"
+   namespace  = "${var.namespace}"
+  stage      = "${var.stage}"
+  attributes = "${compact(concat(var.attributes, list("disk","queue","depth","too","high")))}"
+}
+module "freeable_memory_too_low_label" {
+  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.1.3"
+  name       = "${var.name}"
+   namespace  = "${var.namespace}"
+  stage      = "${var.stage}"
+  attributes = "${compact(concat(var.attributes, list("freeable","memory","too","low")))}"
+}
+module "free_storage_space_threshold_label" {
+  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.1.3"
+  name       = "${var.name}"
+   namespace  = "${var.namespace}"
+  stage      = "${var.stage}"
+  attributes = "${compact(concat(var.attributes, list("free","storage","space","threshold")))}"
+}
+module "swap_usage_too_high_label" {
+  source     = "git::https://github.com/cloudposse/terraform-terraform-label.git?ref=tags/0.1.3"
+  name       = "${var.name}"
+   namespace  = "${var.namespace}"
+  stage      = "${var.stage}"
+  attributes = "${compact(concat(var.attributes, list("swap","usage","too","high")))}"
 }
